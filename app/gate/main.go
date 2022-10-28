@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/gotechbook/gotechbook-application/config"
-	"github.com/gotechbook/gotechbook-application/service/route"
+	"github.com/gotechbook/gotechbook-application/route"
 	"github.com/topfreegames/pitaya/v2"
 	"github.com/topfreegames/pitaya/v2/acceptor"
 	"github.com/topfreegames/pitaya/v2/cluster"
