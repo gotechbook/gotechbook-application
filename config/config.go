@@ -3,14 +3,22 @@ package config
 import (
 	"fmt"
 	"github.com/fsnotify/fsnotify"
+	"github.com/go-redis/redis/v8"
 	logs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/topfreegames/pitaya/v2/logger/interfaces"
 	ll "github.com/topfreegames/pitaya/v2/logger/logrus"
+	"go.mongodb.org/mongo-driver/mongo"
 	"io"
 	"os"
 	"time"
+)
+
+var (
+	GOTECHBOOK_GATE  GateConfig
+	GOTECHBOOK_REDIS *redis.Client
+	GOTECHBOOK_MONGO *mongo.Client
 )
 
 func Viper(path string, m interface{}) *viper.Viper {

@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/gotechbook/gotechbook-application/config"
-	"github.com/gotechbook/gotechbook-application/route"
+	"github.com/gotechbook/gotechbook-application/service/route"
 	"github.com/topfreegames/pitaya/v2"
 	"github.com/topfreegames/pitaya/v2/acceptor"
 	"github.com/topfreegames/pitaya/v2/cluster"
@@ -22,7 +22,7 @@ func main() {
 
 	config.LoadConfig(*path, &config.GOTECHBOOK_GATE)
 	pitaya.SetLogger(config.SetLogger(fmt.Sprintf("./log/%s.log", config.GOTECHBOOK_GATE.App.Name), config.GOTECHBOOK_GATE.App.LogType, config.GOTECHBOOK_GATE.App.Name))
-	config.GOTECHBOOK_GATE_REDIS = config.GOTECHBOOK_GATE.Redis.Connect()
+	config.GOTECHBOOK_REDIS = config.GOTECHBOOK_GATE.Redis.Connect()
 
 	app, bs := createApp()
 	defer app.Shutdown()
