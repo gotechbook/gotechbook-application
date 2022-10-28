@@ -3,7 +3,6 @@ package config
 import (
 	"fmt"
 	"github.com/fsnotify/fsnotify"
-	"github.com/go-redis/redis/v8"
 	logs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -13,20 +12,6 @@ import (
 	"os"
 	"time"
 )
-
-var (
-	GOTECHBOOK_GATE  Config
-	GOTECHBOOK_REDIS *redis.Client
-)
-
-type Config struct {
-	App         `json:"app" mapstructure:"app"`
-	Connection  `json:"connection" mapstructure:"connection"`
-	Concurrency `json:"concurrency" mapstructure:"concurrency"`
-	Discovery   `json:"discovery" mapstructure:"discovery" `
-	Redis       `json:"redis" mapstructure:"redis"`
-	Modules     `json:"modules" mapstructure:"modules"`
-}
 
 func Viper(path string, m interface{}) *viper.Viper {
 	v := viper.New()

@@ -1,4 +1,4 @@
-module github.com/gotechbook/gotechbook-application-gate
+module github.com/gotechbook/gotechbook-application
 
 go 1.19
 

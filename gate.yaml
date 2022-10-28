@@ -1,5 +1,5 @@
 app:
-  name: "gotechbook-application-gate"
+  name: "gate"
   port: 3250
   rpc-port: 10000
   grpc-host: "127.0.0.1"
@@ -43,7 +43,7 @@ discovery:
   #bool Whether etcd heartbeats should be logged in debug mode
   cluster-sd-etcd-heartbeat-log: false
   #string Prefix used to avoid collisions with different pitaya applications, servers must have the same prefix to be able to see each other
-  cluster-sd-etcd-prefix: pitaya/
+  cluster-sd-etcd-prefix: gate/
   #time-Duration Interval between service-http-admin syncs performed by the service discovery module s
   cluster-sd-etcd-sync-servers-interval: 120
   #time-Duration Time to wait to shutdown after deregistering from service discovery
@@ -71,7 +71,7 @@ modules:
   #string Comma separated list of etcd endpoints to be used by the binding storage module, should be the same as the service discovery etcd
   modules-binding-storage-etcd-endpoints: localhost:2379
   #string Prefix used for etcd, should be the same as the service discovery
-  modules-binding-storage-etcd-prefix: gotechbook-application-gate/
+  modules-binding-storage-etcd-prefix: gate/
   #time-Time Timeout to establish the etcd connection s
   modules-binding-storage-etcd-dial-timeout: 5
   #time-Time Duration of the etcd lease before automatic renewal h

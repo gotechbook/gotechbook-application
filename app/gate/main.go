@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/gotechbook/gotechbook-application-gate/config"
-	"github.com/gotechbook/gotechbook-application-gate/route"
+	"github.com/gotechbook/gotechbook-application/config"
+	"github.com/gotechbook/gotechbook-application/route"
 	"github.com/topfreegames/pitaya/v2"
 	"github.com/topfreegames/pitaya/v2/acceptor"
 	"github.com/topfreegames/pitaya/v2/cluster"
@@ -16,13 +16,13 @@ import (
 )
 
 func main() {
-	path := flag.String("conf", "config.yaml", "config path")
+	path := flag.String("conf", "./gate.yaml", "config path")
 	flag.Parse()
 	config.Viper(*path, &config.GOTECHBOOK_GATE)
 
 	config.LoadConfig(*path, &config.GOTECHBOOK_GATE)
 	pitaya.SetLogger(config.SetLogger(fmt.Sprintf("./log/%s.log", config.GOTECHBOOK_GATE.App.Name), config.GOTECHBOOK_GATE.App.LogType, config.GOTECHBOOK_GATE.App.Name))
-	config.GOTECHBOOK_REDIS = config.GOTECHBOOK_GATE.Redis.Connect()
+	config.GOTECHBOOK_GATE_REDIS = config.GOTECHBOOK_GATE.Redis.Connect()
 
 	app, bs := createApp()
 	defer app.Shutdown()
