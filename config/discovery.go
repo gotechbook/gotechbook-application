@@ -7,21 +7,21 @@ import (
 )
 
 type Discovery struct {
-	ClusterSdEtcdDialTimeout             int      `json:"cluster-sd-etcd-dial-timeout" yaml:"cluster-sd-etcd-dial-timeout"`
-	ClusterSdEtcdEndpoints               string   `json:"cluster-sd-etcd-endpoints" yaml:"cluster-sd-etcd-endpoints"`
-	ClusterSdEtcdUser                    string   `json:"cluster-sd-etcd-user" yaml:"cluster-sd-etcd-user"`
-	ClusterSdEtcdPass                    string   `json:"cluster-sd-etcd-pass" yaml:"cluster-sd-etcd-pass"`
-	ClusterSdEtcdHeartbeatTtl            int      `json:"cluster-sd-etcd-heartbeat-ttl" yaml:"cluster-sd-etcd-heartbeat-ttl"`
-	ClusterSdEtcdGrantLeaseTimeout       int      `json:"cluster-sd-etcd-grant-lease-timeout" yaml:"cluster-sd-etcd-grant-lease-timeout"`
-	ClusterSdEtcdGrantLeaseMaxRetries    int      `json:"cluster-sd-etcd-grant-lease-max-retries" yaml:"cluster-sd-etcd-grant-lease-max-retries"`
-	ClusterSdEtcdGrantLeaseRetryInterval int      `json:"cluster-sd-etcd-grant-lease-retry-interval" yaml:"cluster-sd-etcd-grant-lease-retry-interval"`
-	ClusterSdEtcdRevokeTimeout           int      `json:"cluster-sd-etcd-revoke-timeout" yaml:"cluster-sd-etcd-revoke-timeout"`
-	ClusterSdEtcdHeartbeatLog            bool     `json:"cluster-sd-etcd-heartbeat-log" yaml:"cluster-sd-etcd-heartbeat-log"`
-	ClusterSdEtcdPrefix                  string   `json:"cluster-sd-etcd-prefix" yaml:"cluster-sd-etcd-prefix"`
-	ClusterSdEtcdSyncServersInterval     int      `json:"cluster-sd-etcd-sync-servers-interval" yaml:"cluster-sd-etcd-sync-servers-interval"`
-	ClusterSdEtcdShutdownDelay           int      `json:"cluster-sd-etcd-shutdown-delay" yaml:"cluster-sd-etcd-shutdown-delay"`
-	ClusterSdEtcdServerTypeBlacklist     []string `json:"cluster-sd-etcd-service-http-admin-type-blacklist" yaml:"cluster-sd-etcd-service-http-admin-type-blacklist"`
-	ClusterSdEtcdSyncServersParallelism  int      `json:"cluster-sd-etcd-sync-servers-parallelism" yaml:"cluster-sd-etcd-sync-servers-parallelism"`
+	ClusterSdEtcdDialTimeout             int      `json:"cluster-sd-etcd-dial-timeout" mapstructure:"cluster-sd-etcd-dial-timeout"`
+	ClusterSdEtcdEndpoints               string   `json:"cluster-sd-etcd-endpoints" mapstructure:"cluster-sd-etcd-endpoints"`
+	ClusterSdEtcdUser                    string   `json:"cluster-sd-etcd-user" mapstructure:"cluster-sd-etcd-user"`
+	ClusterSdEtcdPass                    string   `json:"cluster-sd-etcd-pass" mapstructure:"cluster-sd-etcd-pass"`
+	ClusterSdEtcdHeartbeatTtl            int      `json:"cluster-sd-etcd-heartbeat-ttl" mapstructure:"cluster-sd-etcd-heartbeat-ttl"`
+	ClusterSdEtcdGrantLeaseTimeout       int      `json:"cluster-sd-etcd-grant-lease-timeout" mapstructure:"cluster-sd-etcd-grant-lease-timeout"`
+	ClusterSdEtcdGrantLeaseMaxRetries    int      `json:"cluster-sd-etcd-grant-lease-max-retries" mapstructure:"cluster-sd-etcd-grant-lease-max-retries"`
+	ClusterSdEtcdGrantLeaseRetryInterval int      `json:"cluster-sd-etcd-grant-lease-retry-interval" mapstructure:"cluster-sd-etcd-grant-lease-retry-interval"`
+	ClusterSdEtcdRevokeTimeout           int      `json:"cluster-sd-etcd-revoke-timeout" mapstructure:"cluster-sd-etcd-revoke-timeout"`
+	ClusterSdEtcdHeartbeatLog            bool     `json:"cluster-sd-etcd-heartbeat-log" mapstructure:"cluster-sd-etcd-heartbeat-log"`
+	ClusterSdEtcdPrefix                  string   `json:"cluster-sd-etcd-prefix" mapstructure:"cluster-sd-etcd-prefix"`
+	ClusterSdEtcdSyncServersInterval     int      `json:"cluster-sd-etcd-sync-servers-interval" mapstructure:"cluster-sd-etcd-sync-servers-interval"`
+	ClusterSdEtcdShutdownDelay           int      `json:"cluster-sd-etcd-shutdown-delay" mapstructure:"cluster-sd-etcd-shutdown-delay"`
+	ClusterSdEtcdServerTypeBlacklist     []string `json:"cluster-sd-etcd-service-http-admin-type-blacklist" mapstructure:"cluster-sd-etcd-service-http-admin-type-blacklist"`
+	ClusterSdEtcdSyncServersParallelism  int      `json:"cluster-sd-etcd-sync-servers-parallelism" mapstructure:"cluster-sd-etcd-sync-servers-parallelism"`
 }
 
 func (d *Discovery) EtcdDiscoveryConfig() *config.EtcdServiceDiscoveryConfig {

@@ -20,12 +20,12 @@ var (
 )
 
 type Config struct {
-	App         `json:"app" yaml:"app"`
-	Connection  Connection  `json:"connection" yaml:"connection"`
-	Concurrency Concurrency `json:"concurrency"`
-	Discovery   Discovery   `json:"discovery" yaml:"discovery"`
-	Redis       Redis       `json:"redis"`
-	Modules     Modules     `json:"modules"`
+	App         `json:"app" mapstructure:"app"`
+	Connection  `json:"connection" mapstructure:"connection"`
+	Concurrency `json:"concurrency" mapstructure:"concurrency"`
+	Discovery   `json:"discovery" mapstructure:"discovery" `
+	Redis       `json:"redis" mapstructure:"redis"`
+	Modules     `json:"modules" mapstructure:"modules"`
 }
 
 func Viper(path string, m interface{}) *viper.Viper {

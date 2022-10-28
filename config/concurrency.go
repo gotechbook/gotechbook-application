@@ -5,10 +5,10 @@ import (
 )
 
 type Concurrency struct {
-	BufferAgentMessages        int `json:"buffer-agent-messages" yaml:"buffer-agent-messages"`
-	BufferHandlerLocalProcess  int `json:"buffer-handler-local-process" yaml:"buffer-handler-local-process"`
-	BufferHandlerRemoteProcess int `json:"buffer-handler-remote-process" yaml:"buffer-handler-remote-process"`
-	ConcurrencyHandlerDispatch int `json:"concurrency-handler-dispatch" yaml:"concurrency-handler-dispatch"`
+	BufferAgentMessages        int `json:"buffer-agent-messages" mapstructure:"buffer-agent-messages"`
+	BufferHandlerLocalProcess  int `json:"buffer-handler-local-process" mapstructure:"buffer-handler-local-process"`
+	BufferHandlerRemoteProcess int `json:"buffer-handler-remote-process" mapstructure:"buffer-handler-remote-process"`
+	ConcurrencyHandlerDispatch int `json:"concurrency-handler-dispatch" mapstructure:"concurrency-handler-dispatch"`
 }
 
 func (c *Concurrency) ConcurrencyConfig(conf *config.PitayaConfig) *config.PitayaConfig {

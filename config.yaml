@@ -2,7 +2,7 @@ app:
   name: "gotechbook-application-gate"
   port: 3250
   rpc-port: 10000
-  grpc-host: 127.0.0.1
+  grpc-host: "127.0.0.1"
   log-type: "debug"
 
 redis:
@@ -71,7 +71,7 @@ modules:
   #string Comma separated list of etcd endpoints to be used by the binding storage module, should be the same as the service discovery etcd
   modules-binding-storage-etcd-endpoints: localhost:2379
   #string Prefix used for etcd, should be the same as the service discovery
-  modules-binding-storage-etcd-prefix: pitaya/
+  modules-binding-storage-etcd-prefix: gotechbook-application-gate/
   #time-Time Timeout to establish the etcd connection s
   modules-binding-storage-etcd-dial-timeout: 5
   #time-Time Duration of the etcd lease before automatic renewal h

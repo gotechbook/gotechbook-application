@@ -6,11 +6,11 @@ import (
 )
 
 type Connection struct {
-	HandlerMessagesCompression   bool `json:"handler-messages-compression" yaml:"handler-messages-compression"`
-	HeartbeatInterval            int  `json:"heartbeat-interval" yaml:"heartbeat-interval"`
-	ConnRateLimitingInterval     int  `json:"conn-rate-limiting-interval" yaml:"conn-rate-limiting-interval"`
-	ConnRateLimitingLimit        int  `json:"conn-rate-limiting-limit" yaml:"conn-rate-limiting-limit"`
-	ConnRateLimitingForceDisable bool `json:"conn-rate-limiting-force-disable" yaml:"conn-rate-limiting-force-disable"`
+	HandlerMessagesCompression   bool `json:"handler-messages-compression" mapstructure:"handler-messages-compression"`
+	HeartbeatInterval            int  `json:"heartbeat-interval" mapstructure:"heartbeat-interval"`
+	ConnRateLimitingInterval     int  `json:"conn-rate-limiting-interval" mapstructure:"conn-rate-limiting-interval"`
+	ConnRateLimitingLimit        int  `json:"conn-rate-limiting-limit" mapstructure:"conn-rate-limiting-limit"`
+	ConnRateLimitingForceDisable bool `json:"conn-rate-limiting-force-disable" mapstructure:"conn-rate-limiting-force-disable"`
 }
 
 func (c *Connection) RateLimitingConfig() *config.RateLimitingConfig {

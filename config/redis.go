@@ -9,10 +9,10 @@ import (
 )
 
 type Redis struct {
-	ServerURL   string `json:"server-url" yaml:"server-url"`
-	Pool        string `json:"pool" yaml:"pool"`
-	Password    string `json:"password" yaml:"password"`
-	Concurrency int    `json:"concurrency" yaml:"concurrency"`
+	ServerURL   string `json:"server-url" mapstructure:"server-url"`
+	Pool        string `json:"pool" mapstructure:"pool"`
+	Password    string `json:"password" mapstructure:"password"`
+	Concurrency int    `json:"concurrency" mapstructure:"concurrency"`
 }
 
 func (r *Redis) WorkerConfig() *config.WorkerConfig {
