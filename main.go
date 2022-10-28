@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/gotechbook/gotechbook-application-gate/config"
+	"github.com/gotechbook/gotechbook-application-gate/route"
 	"github.com/topfreegames/pitaya/v2"
 	"github.com/topfreegames/pitaya/v2/acceptor"
 	"github.com/topfreegames/pitaya/v2/cluster"
@@ -26,8 +27,7 @@ func main() {
 	app, bs := createApp()
 	defer app.Shutdown()
 	app.RegisterModule(bs, fmt.Sprintf("%s-storage", config.GOTECHBOOK_GATE.App.Name))
-	//register.LoadRoute(app)
-	//
+	route.Register(app)
 	app.Start()
 }
 func createApp() (pitaya.Pitaya, *modules.ETCDBindingStorage) {
