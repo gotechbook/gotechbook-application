@@ -12,26 +12,32 @@ import (
 	"time"
 )
 
-var (
-	_ service.Service = (*Topic)(nil)
-)
-
 type Topic struct {
 	component.Base
 }
 
-func (t Topic) Create(ctx context.Context, msg interface{}) (interface{}, error) {
+func NewTopic() *Topic {
+	return &Topic{}
+}
+func (t Topic) Create(ctx context.Context, msg *protos.TopicCreateRequest) (*protos.TopicCreateResponse, error) {
 	logger.Log.Info("receive msg => ", msg)
-	ret := &protos.TopicCreateResponse{Code: service.SUCCESS}
-	data := msg.(mongo.TbConfigureTopic)
-	data.ID = utils.NewSnowFlake().GenerateID()
-	data.CreatedAt = time.Now()
-	data.UpdatedAt = time.Now()
-	var _, err = mongo.Insert(ctx, config.GOTECHBOOK_MONGO, mongo.DB_CONFIGURE, mongo.TbConfigureTopicName, &data)
+	ret := &protos.TopicCreateResponse{}
+	ret.Code = service.FAIL
+	data := mongo.TbConfigureTopic{
+		ID:        utils.NewSnowFlake().GenerateID(),
+		Code:      msg.Code,
+		Name:      msg.Name,
+		Describe:  msg.Describe,
+		IsRead:    false,
+		IsDel:     false,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}
+	_, err := mongo.Insert(ctx, config.GOTECHBOOK_MONGO, mongo.DB_CONFIGURE, mongo.TbConfigureTopicName, &data)
 	if err != nil {
-		ret.Code = service.FAIL
 		return ret, err
 	}
+	ret.Code = service.SUCCESS
 	return ret, nil
 }
 
@@ -63,8 +69,4 @@ func (t Topic) FindPage(ctx context.Context, msg interface{}) (interface{}, erro
 func (t Topic) FindAll(ctx context.Context, msg interface{}) (interface{}, error) {
 	//TODO implement me
 	panic("implement me")
-}
-
-func NewTopic() *Topic {
-	return &Topic{}
 }

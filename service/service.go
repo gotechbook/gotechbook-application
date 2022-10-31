@@ -9,7 +9,8 @@ const (
 	CONFIG = "config"
 )
 const (
-	SUCCESS = iota
+	_ = iota
+	SUCCESS
 	FAIL
 	ERROR
 	NOT_FOUND

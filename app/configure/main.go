@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/gotechbook/gotechbook-application/config"
+	"github.com/gotechbook/gotechbook-application/router"
 	"github.com/topfreegames/pitaya/v2"
 	"github.com/topfreegames/pitaya/v2/cluster"
 	c "github.com/topfreegames/pitaya/v2/config"
@@ -26,13 +27,12 @@ func main() {
 	app, bs := createApp()
 	defer app.Shutdown()
 	app.RegisterModule(bs, fmt.Sprintf("%s-storage", config.GOTECHBOOK_CONFIGURE.App.Name))
+	router.Configure(app)
 	app.Start()
 }
 func createApp() (pitaya.Pitaya, *modules.ETCDBindingStorage) {
 	builderConfig := c.NewDefaultBuilderConfig()
 	builderConfig.Pitaya = *config.GOTECHBOOK_CONFIGURE.Connection.ConnectionConfig()
-	builderConfig.Metrics.Prometheus.Enabled = true
-
 	customMetrics := c.NewDefaultCustomMetricsSpec()
 	prometheusConfig := c.NewDefaultPrometheusConfig()
 	statsdConfig := c.NewDefaultStatsdConfig()
