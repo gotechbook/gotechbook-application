@@ -1,4 +1,4 @@
-package route
+package router
 
 import (
 	"context"
@@ -20,6 +20,6 @@ func register(app pitaya.Pitaya, srvType string) {
 		return nil, nil
 	})
 	if err != nil {
-		fmt.Printf("error adding route %s\n", err.Error())
+		fmt.Printf("error adding router %s\n", err.Error())
 	}
 }

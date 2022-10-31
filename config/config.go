@@ -16,9 +16,10 @@ import (
 )
 
 var (
-	GOTECHBOOK_GATE  GateConfig
-	GOTECHBOOK_REDIS *redis.Client
-	GOTECHBOOK_MONGO *mongo.Client
+	GOTECHBOOK_GATE      GateConfig
+	GOTECHBOOK_CONFIGURE ConfigureConfig
+	GOTECHBOOK_REDIS     *redis.Client
+	GOTECHBOOK_MONGO     *mongo.Client
 )
 
 func Viper(path string, m interface{}) *viper.Viper {

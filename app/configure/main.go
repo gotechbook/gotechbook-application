@@ -4,9 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/gotechbook/gotechbook-application/config"
-	"github.com/gotechbook/gotechbook-application/router"
 	"github.com/topfreegames/pitaya/v2"
-	"github.com/topfreegames/pitaya/v2/acceptor"
 	"github.com/topfreegames/pitaya/v2/cluster"
 	c "github.com/topfreegames/pitaya/v2/config"
 	"github.com/topfreegames/pitaya/v2/constants"
@@ -16,40 +14,39 @@ import (
 )
 
 func main() {
-	path := flag.String("conf", "./gate.yaml", "config path")
+	path := flag.String("conf", "./configure.yaml", "config path")
 	flag.Parse()
-	config.Viper(*path, &config.GOTECHBOOK_GATE)
+	config.Viper(*path, &config.GOTECHBOOK_CONFIGURE)
 
-	config.LoadConfig(*path, &config.GOTECHBOOK_GATE)
-	pitaya.SetLogger(config.SetLogger(fmt.Sprintf("./log/%s.log", config.GOTECHBOOK_GATE.App.Name), config.GOTECHBOOK_GATE.App.LogType, config.GOTECHBOOK_GATE.App.Name))
-	config.GOTECHBOOK_REDIS = config.GOTECHBOOK_GATE.Redis.Connect()
+	config.LoadConfig(*path, &config.GOTECHBOOK_CONFIGURE)
+	pitaya.SetLogger(config.SetLogger(fmt.Sprintf("./log/%s.log", config.GOTECHBOOK_CONFIGURE.App.Name), config.GOTECHBOOK_CONFIGURE.App.LogType, config.GOTECHBOOK_CONFIGURE.App.Name))
+	config.GOTECHBOOK_REDIS = config.GOTECHBOOK_CONFIGURE.Redis.Connect()
 
 	app, bs := createApp()
 	defer app.Shutdown()
-	app.RegisterModule(bs, fmt.Sprintf("%s-storage", config.GOTECHBOOK_GATE.App.Name))
-	router.Register(app)
+	app.RegisterModule(bs, fmt.Sprintf("%s-storage", config.GOTECHBOOK_CONFIGURE.App.Name))
 	app.Start()
 }
 func createApp() (pitaya.Pitaya, *modules.ETCDBindingStorage) {
 	builderConfig := c.NewDefaultBuilderConfig()
-	builderConfig.Pitaya = *config.GOTECHBOOK_GATE.Connection.ConnectionConfig()
+	builderConfig.Pitaya = *config.GOTECHBOOK_CONFIGURE.Connection.ConnectionConfig()
 	builderConfig.Metrics.Prometheus.Enabled = true
 
 	customMetrics := c.NewDefaultCustomMetricsSpec()
 	prometheusConfig := c.NewDefaultPrometheusConfig()
 	statsdConfig := c.NewDefaultStatsdConfig()
-	etcdSDConfig := config.GOTECHBOOK_GATE.Discovery.EtcdDiscoveryConfig()
+	etcdSDConfig := config.GOTECHBOOK_CONFIGURE.Discovery.EtcdDiscoveryConfig()
 	natsRPCServerConfig := c.NewDefaultNatsRPCServerConfig()
 	natsRPCClientConfig := c.NewDefaultNatsRPCClientConfig()
-	workerConfig := config.GOTECHBOOK_GATE.Redis.WorkerConfig()
+	workerConfig := config.GOTECHBOOK_CONFIGURE.Redis.WorkerConfig()
 	enqueueOpts := c.NewDefaultEnqueueOpts()
 	groupServiceConfig := c.NewDefaultMemoryGroupConfig()
-	builder := pitaya.NewBuilder(true,
-		config.GOTECHBOOK_GATE.App.Name,
+	builder := pitaya.NewBuilder(false,
+		config.GOTECHBOOK_CONFIGURE.App.Name,
 		pitaya.Cluster,
 		map[string]string{
-			constants.GRPCHostKey: config.GOTECHBOOK_GATE.App.GrpcHost,
-			constants.GRPCPortKey: strconv.Itoa(config.GOTECHBOOK_GATE.App.RpcPort),
+			constants.GRPCHostKey: config.GOTECHBOOK_CONFIGURE.App.GrpcHost,
+			constants.GRPCPortKey: strconv.Itoa(config.GOTECHBOOK_CONFIGURE.App.RpcPort),
 		},
 		*builderConfig,
 		*customMetrics,
@@ -64,7 +61,7 @@ func createApp() (pitaya.Pitaya, *modules.ETCDBindingStorage) {
 	)
 
 	grpcServerConfig := c.NewDefaultGRPCServerConfig()
-	grpcServerConfig.Port = config.GOTECHBOOK_GATE.App.RpcPort
+	grpcServerConfig.Port = config.GOTECHBOOK_CONFIGURE.App.RpcPort
 	gs, err := cluster.NewGRPCServer(*grpcServerConfig, builder.Server, builder.MetricsReporters)
 	if err != nil {
 		panic(err)
@@ -72,7 +69,7 @@ func createApp() (pitaya.Pitaya, *modules.ETCDBindingStorage) {
 	builder.RPCServer = gs
 	builder.Groups = groups.NewMemoryGroupService(*c.NewDefaultMemoryGroupConfig())
 
-	bs := modules.NewETCDBindingStorage(builder.Server, builder.SessionPool, *config.GOTECHBOOK_GATE.Modules.ETCDBindingConfig())
+	bs := modules.NewETCDBindingStorage(builder.Server, builder.SessionPool, *config.GOTECHBOOK_CONFIGURE.Modules.ETCDBindingConfig())
 	gc, err := cluster.NewGRPCClient(
 		*c.NewDefaultGRPCClientConfig(),
 		builder.Server,
@@ -84,6 +81,5 @@ func createApp() (pitaya.Pitaya, *modules.ETCDBindingStorage) {
 		panic(err)
 	}
 	builder.RPCClient = gc
-	builder.AddAcceptor(acceptor.NewWSAcceptor(fmt.Sprintf(":%d", config.GOTECHBOOK_GATE.App.Port)))
 	return builder.Build(), bs
 }

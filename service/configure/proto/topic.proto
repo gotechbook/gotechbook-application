@@ -4,26 +4,14 @@ package proto;
 
 option go_package = "./proto";
 
-
 message TopicRequest{
   string name = 1;
   string describe = 2;
 }
+
 message TopicDeleteByIdsRequest{
   repeated string ids = 1;
 }
-
-
-//    ID        string    `bson:"id" json:"ID,omitempty"`            // ID
-//    Code      int64     `bson:"code" json:"code,omitempty"`        // Code
-//    Name      string    `bson:"name" json:"name,omitempty"`        // Name
-//    describe  string    `bson:"describe"json:"describe,omitempty"` // 描述
-//    IsRead    bool      `bson:"isRead" json:"isRead,omitempty"`    // 是否只读
-//    IsDel     bool      `bson:"isDel" json:"isDel,omitempty"`      // 是否删除
-//    CreatedAt time.Time `bson:"createdAt" json:"createdAt"`
-//    UpdatedAt time.Time `bson:"updatedAt" json:"updatedAt"`
-
-
 
 message ChatDeleteRequest{
   string id = 1;
@@ -42,46 +30,37 @@ message ChatUpdateRequest{
   string content = 6;
 }
 
-message ChatUpdateResponse{
+message TopicUpdateResponse{
   int64 code = 1;
 }
 
-message ChatPageRequest{
+message TopicPageRequest{
   int64 page = 1;
   int64 pageSize = 2;
 }
 
-message ChatPageResponse{
+message TopicPageResponse{
   int64 page = 1;
   int64 pageSize = 2;
   int64 total = 3;
-  repeated Chat data = 4;
+  repeated Topic data = 4;
 }
 
-message ChatAllRequest{
+message TopicAllResponse{
+  repeated Topic data = 1;
 }
 
-message ChatAllResponse{
-  repeated Chat data = 1;
+message TopicResponse{
+  Topic data = 1;
 }
 
-message ChatRequest{
+message Topic{
   string id = 1;
+  int64 code = 2;
+  string name = 3;
+  string describe = 4;
+  string isRead = 5;
+  bool isDel = 6;
+  string createdAt = 7;
+  string updatedAt = 8;
 }
-
-message ChatResponse{
-  Chat data = 1;
-}
-
-message Chat{
-  string id = 1;
-  string roomId = 2;
-  string userId = 3;
-  string userRoleId = 4;
-  string toUserRoleId = 5;
-  string content = 6;
-  bool isDel = 7;
-  string createdAt = 8;
-  string updatedAt = 9;
-}
-

@@ -1,15 +1,21 @@
 app:
-  name: "gate"
-  port: 3250
-  rpc-port: 10000
-  grpc-host: "127.0.0.1"
+  name: "configure"
+  rpc-port: 10001
+  grpc-host: 127.0.0.1
   log-type: "debug"
-
+  machine-id: 10001
 redis:
   server-url: localhost:6379
   pool: 10
   password:
   concurrency: 1
+
+mongo:
+  #mongodb://admin:123456@127.0.0.1:27017
+  uri: mongodb://localhost:27017
+  max-pool-size: 1000
+  min-pool-size: 10
+  max-connecting: 1000
 
 concurrency:
   #int Buffer size for received client messages for each agent
@@ -71,8 +77,19 @@ modules:
   #string Comma separated list of etcd endpoints to be used by the binding storage module, should be the same as the service discovery etcd
   modules-binding-storage-etcd-endpoints: localhost:2379
   #string Prefix used for etcd, should be the same as the service discovery
-  modules-binding-storage-etcd-prefix: gate/
+  modules-binding-storage-etcd-prefix: configure/
   #time-Time Timeout to establish the etcd connection s
   modules-binding-storage-etcd-dial-timeout: 5
   #time-Time Duration of the etcd lease before automatic renewal h
   modules-binding-storage-etcd-lease-ttl: 1
+#groups:
+#  #string Comma separated list of etcd endpoints to be used by the groups etcd service
+#  groups-etcd-endpoints: localhost:2379
+#  #string Prefix used for every group key in etcd
+#  groups-etcd-prefix: pitaya/
+#  #time-Time Timeout to establish the etcd group connection s
+#  groups-etcd-dialtimeout: 5
+#  #time-Duration Timeout to finish group request to Etcd s
+#  groups-etcd-transactiontimeout: 5
+#  #time-Duration Duration time of tick that will check if should delete group or not s
+#  groups-memory-tickduration: 30
