@@ -8,6 +8,21 @@ const (
 	CHAT   = "chat"
 	CONFIG = "config"
 )
+const (
+	SUCCESS = iota
+	FAIL
+	ERROR
+	NOT_FOUND
+	EXIST
+	NOT_EXIST
+	INVALID_PARAM
+	INVALID_TOKEN
+	INVALID_PASSWORD
+	INVALID_EMAIL
+	INVALID_PHONE
+	INVALID_CAPTCHA
+	INVALID_CODE
+)
 
 type Service interface {
 	Create(ctx context.Context, msg interface{}) (interface{}, error)

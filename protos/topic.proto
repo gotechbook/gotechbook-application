@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package protos;
+
+option go_package = "./protos";
+
+message TopicCreateRequest{
+  string name = 1;
+  string describe = 2;
+}
+message TopicCreateResponse{
+  int64 code = 1;
+}
+message TopicDeleteRequest{
+  string id = 1;
+}
+message TopicDeleteResponse{
+  int64 code = 1;
+}
+message TopicDeleteByIdsRequest{
+  repeated string ids = 1;
+}
+message TopicDeleteByIdsResponse{
+  int64 code = 1;
+}
+message TopicUpdateRequest{
+    TopicUpdate data = 1;
+}
+message TopicUpdateResponse{
+  int64 code = 1;
+}
+message TopicFindOneRequest{
+  string id = 1;
+}
+message TopicFindOneResponse{
+  Topic data = 1;
+}
+message TopicFindPageRequest{
+  int64 page = 1;
+  int64 pageSize = 2;
+}
+message TopicFindPageResponse{
+  int64 page = 1;
+  int64 pageSize = 2;
+  int64 total = 3;
+  repeated Topic data = 4;
+}
+message TopicFindAllRequest{
+}
+message TopicFindAllResponse{
+  repeated Topic data = 1;
+}
+message Topic{
+  string id = 1;
+  int64 code = 2;
+  string name = 3;
+  string describe = 4;
+  string isRead = 5;
+  bool isDel = 6;
+  string createdAt = 7;
+  string updatedAt = 8;
+}
+
+message TopicUpdate{
+  string id = 1;
+  int64 code = 2;
+  string name = 3;
+  string describe = 4;
+  string isRead = 5;
+  bool isDel = 6;
+}

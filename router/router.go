@@ -9,7 +9,8 @@ import (
 )
 
 func Register(app pitaya.Pitaya) {
-
+	//register(app, config.GOTECHBOOK_GATE.App.Name)
+	GateConfigure(app)
 }
 
 func register(app pitaya.Pitaya, srvType string) {

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"github.com/gotechbook/gotechbook-application/config"
@@ -21,7 +22,7 @@ func main() {
 	config.LoadConfig(*path, &config.GOTECHBOOK_CONFIGURE)
 	pitaya.SetLogger(config.SetLogger(fmt.Sprintf("./log/%s.log", config.GOTECHBOOK_CONFIGURE.App.Name), config.GOTECHBOOK_CONFIGURE.App.LogType, config.GOTECHBOOK_CONFIGURE.App.Name))
 	config.GOTECHBOOK_REDIS = config.GOTECHBOOK_CONFIGURE.Redis.Connect()
-
+	config.GOTECHBOOK_MONGO, _ = config.GOTECHBOOK_CONFIGURE.Mongo.MongoConfig(context.Background())
 	app, bs := createApp()
 	defer app.Shutdown()
 	app.RegisterModule(bs, fmt.Sprintf("%s-storage", config.GOTECHBOOK_CONFIGURE.App.Name))
