@@ -8,4 +8,5 @@ type FFFConfig struct {
 	Redis       `mapstructure:"redis" json:"redis"`
 	Modules     `mapstructure:"modules" json:"modules"`
 	Mongo       `mapstructure:"mongo" json:"mongo"`
+	Chain       `mapstructure:"chain" json:"chain"`
 }

@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"github.com/FinanceFutureFactory/3fcoin/core/ethclient"
 	"github.com/fsnotify/fsnotify"
 	"github.com/go-redis/redis/v8"
 	logs "github.com/lestrrat-go/file-rotatelogs"
@@ -16,12 +17,13 @@ import (
 )
 
 var (
-	GOTECHBOOK_GATE      GateConfig
-	GOTECHBOOK_CONFIGURE ConfigureConfig
-	GOTECHBOOK_AUTH      AuthConfig
-	GOTECHBOOK_FFF       FFFConfig
-	GOTECHBOOK_REDIS     *redis.Client
-	GOTECHBOOK_MONGO     *mongo.Client
+	GOTECHBOOK_GATE             GateConfig
+	GOTECHBOOK_CONFIGURE        ConfigureConfig
+	GOTECHBOOK_AUTH             AuthConfig
+	GOTECHBOOK_FFF              FFFConfig
+	GOTECHBOOK_REDIS            *redis.Client
+	GOTECHBOOK_MONGO            *mongo.Client
+	GOTECHBOOK_FFF_CHAIN_CLIENT *ethclient.Client
 )
 
 func Viper(path string, m interface{}) *viper.Viper {

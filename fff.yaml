@@ -93,3 +93,8 @@ modules:
 #  groups-etcd-transactiontimeout: 5
 #  #time-Duration Duration time of tick that will check if should delete group or not s
 #  groups-memory-tickduration: 30
+chain:
+  id : 98888
+  type: "ETH"
+  name: "FFF"
+  node: "http://87.118.86.2:8489"

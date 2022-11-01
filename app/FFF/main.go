@@ -24,6 +24,8 @@ func main() {
 	pitaya.SetLogger(config.SetLogger(fmt.Sprintf("./log/%s.log", config.GOTECHBOOK_FFF.App.Name), config.GOTECHBOOK_FFF.App.LogType, config.GOTECHBOOK_FFF.App.Name))
 	config.GOTECHBOOK_REDIS = config.GOTECHBOOK_FFF.Redis.Connect()
 	config.GOTECHBOOK_MONGO, _ = config.GOTECHBOOK_FFF.Mongo.MongoConfig(context.Background())
+	config.GOTECHBOOK_FFF_CHAIN_CLIENT = config.GOTECHBOOK_FFF.Chain.Connect()
+
 	app, bs := createApp()
 	defer app.Shutdown()
 	app.RegisterModule(bs, fmt.Sprintf("%s-storage", config.GOTECHBOOK_FFF.App.Name))
