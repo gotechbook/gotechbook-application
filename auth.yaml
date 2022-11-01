@@ -1,0 +1,95 @@
+app:
+  name: "auth"
+  rpc-port: 10002
+  grpc-host: 127.0.0.1
+  log-type: "debug"
+  machine-id: 10002
+redis:
+  server-url: localhost:6379
+  pool: 10
+  password:
+  concurrency: 1
+
+mongo:
+  #mongodb://admin:123456@127.0.0.1:27017
+  uri: mongodb://localhost:27017
+  max-pool-size: 1000
+  min-pool-size: 10
+  max-connecting: 1000
+
+concurrency:
+  #int Buffer size for received client messages for each agent
+  buffer-agent-messages: 100
+  #int Buffer size for messages received by the handler and processed locally
+  buffer-handler-local-process: 20
+  #int Buffer size for messages received by the handler and forwarded to remote servers
+  buffer-handler-remote-process: 20
+  #int Number of goroutines processing messages at the handler service
+  concurrency-handler-dispatch: 25
+
+discovery:
+  #Dial timeout value passed to the service discovery etcd client s
+  cluster-sd-etcd-dial-timeout: 5
+  #string List of comma separated etcd endpoints
+  cluster-sd-etcd-endpoints: localhost:2379
+  #string Username to connect to etcd
+  cluster-sd-etcd-user:
+  #string Password to connect to etcd
+  cluster-sd-etcd-pass:
+  #time-Time Hearbeat interval for the etcd lease s
+  cluster-sd-etcd-heartbeat-ttl: 60
+  #time-Duration Timeout for etcd lease s
+  cluster-sd-etcd-grant-lease-timeout: 60
+  #int Maximum number of attempts to etcd grant lease
+  cluster-sd-etcd-grant-lease-max-retries: 15
+  #time-Duration Interval between each grant lease attempt s
+  cluster-sd-etcd-grant-lease-retry-interval: 5
+  #time-Duration Timeout for etcd’s revoke function s
+  cluster-sd-etcd-revoke-timeout: 5
+  #bool Whether etcd heartbeats should be logged in debug mode
+  cluster-sd-etcd-heartbeat-log: false
+  #string Prefix used to avoid collisions with different pitaya applications, servers must have the same prefix to be able to see each other
+  cluster-sd-etcd-prefix: application/
+  #time-Duration Interval between service-http-admin syncs performed by the service discovery module s
+  cluster-sd-etcd-sync-servers-interval: 120
+  #time-Duration Time to wait to shutdown after deregistering from service discovery
+  cluster-sd-etcd-shutdown-delay: 10
+  #[]string A list of service-http-admin types that should be ignored by the service discovery
+  cluster-sd-etcd-server-type-blacklist: []
+  #int The number of goroutines that should be used while getting service-http-admin information on etcd initialization
+  cluster-sd-etcd-sync-servers-parallelism: 10
+
+connection:
+  #bool Whether messages between client and service-http-admin should be compressed
+  handler-messages-compression: true
+  #time-Time Keepalive heartbeat interval for the client connection s
+  heartbeat-interval: 30
+  #time-Duration Window of time to count requests s
+  conn-rate-limiting-interval: 1
+  #int Max number of requests allowed in a interval
+  conn-rate-limiting-limit: 20
+  #bool If true, ignores rate limiting even when added with WithWrappers
+  conn-rate-limiting-force-disable: false
+
+modules:
+  #bool Whether Pitaya should enforce unique sessions for the clients, enabling the unique sessions module
+  session-unique: true
+  #string Comma separated list of etcd endpoints to be used by the binding storage module, should be the same as the service discovery etcd
+  modules-binding-storage-etcd-endpoints: localhost:2379
+  #string Prefix used for etcd, should be the same as the service discovery
+  modules-binding-storage-etcd-prefix: configure/
+  #time-Time Timeout to establish the etcd connection s
+  modules-binding-storage-etcd-dial-timeout: 5
+  #time-Time Duration of the etcd lease before automatic renewal h
+  modules-binding-storage-etcd-lease-ttl: 1
+#groups:
+#  #string Comma separated list of etcd endpoints to be used by the groups etcd service
+#  groups-etcd-endpoints: localhost:2379
+#  #string Prefix used for every group key in etcd
+#  groups-etcd-prefix: pitaya/
+#  #time-Time Timeout to establish the etcd group connection s
+#  groups-etcd-dialtimeout: 5
+#  #time-Duration Timeout to finish group request to Etcd s
+#  groups-etcd-transactiontimeout: 5
+#  #time-Duration Duration time of tick that will check if should delete group or not s
+#  groups-memory-tickduration: 30

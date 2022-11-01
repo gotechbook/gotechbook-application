@@ -18,6 +18,7 @@ import (
 var (
 	GOTECHBOOK_GATE      GateConfig
 	GOTECHBOOK_CONFIGURE ConfigureConfig
+	GOTECHBOOK_AUTH      AuthConfig
 	GOTECHBOOK_REDIS     *redis.Client
 	GOTECHBOOK_MONGO     *mongo.Client
 )
