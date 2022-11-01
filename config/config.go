@@ -19,6 +19,7 @@ var (
 	GOTECHBOOK_GATE      GateConfig
 	GOTECHBOOK_CONFIGURE ConfigureConfig
 	GOTECHBOOK_AUTH      AuthConfig
+	GOTECHBOOK_FFF       FFFConfig
 	GOTECHBOOK_REDIS     *redis.Client
 	GOTECHBOOK_MONGO     *mongo.Client
 )
