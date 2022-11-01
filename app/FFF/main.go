@@ -27,7 +27,7 @@ func main() {
 	app, bs := createApp()
 	defer app.Shutdown()
 	app.RegisterModule(bs, fmt.Sprintf("%s-storage", config.GOTECHBOOK_FFF.App.Name))
-	router.Configure(app)
+	router.FFF(app)
 	app.Start()
 }
 func createApp() (pitaya.Pitaya, *modules.ETCDBindingStorage) {

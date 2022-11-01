@@ -12,6 +12,7 @@ import (
 const (
 	DB_CONFIGURE = "db_configure"
 	DB_CHAT      = "db_chat"
+	DB_FFF       = "db_fff"
 )
 
 func GetMongoClient(ctx context.Context) (c *mongo.Client) {
