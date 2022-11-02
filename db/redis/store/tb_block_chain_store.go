@@ -27,21 +27,21 @@ func (rs *BlockChainDataStore) UseWithCtx(ctx context.Context) *BlockChainDataSt
 	return rs
 }
 
-func (rs *BlockChainDataStore) Set(value map[string]interface{}) error {
+func (rs *BlockChainDataStore) Set(value redis.BlockChain) error {
 	err := config.GOTECHBOOK_REDIS.HSet(rs.Context, rs.PreKey, value).Err()
 	if err != nil {
-		logger.Log.Error("LogicTeamDetailStore Set Error!", zap.Error(err))
+		logger.Log.Error("BlockChainDataStore Set Error!", zap.Error(err))
 	}
 	return err
 }
 
-func (rs *BlockChainDataStore) GetByKey(id string) (rst redis.BlockChainData, err error) {
+func (rs *BlockChainDataStore) GetByKey(id string) (rst redis.BlockChain, err error) {
 	val, err := config.GOTECHBOOK_REDIS.HMGet(rs.Context, rs.PreKey, id).Result()
 	if err != nil {
-		logger.Log.Error("LogicTeamDetailStore GetByKey Error!", zap.Error(err))
+		logger.Log.Error("BlockChainDataStore GetByKey Error!", zap.Error(err))
 		return rst, err
 	}
 	json.Unmarshal([]byte(val[0].(string)), &rst)
-	logger.Log.Info("LogicTeamDetailStore GetKey val!", rst)
+	logger.Log.Info("BlockChainDataStore GetKey val!", rst)
 	return rst, err
 }
