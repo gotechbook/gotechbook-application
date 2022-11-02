@@ -10,38 +10,38 @@ import (
 	"time"
 )
 
-type BlockChainDataStore struct {
+type FFFBlockChainDataStore struct {
 	Expiration time.Duration
 	PreKey     string
 	Context    context.Context
 }
 
-func NewBlockChainDataStore() *BlockChainDataStore {
-	return &BlockChainDataStore{
+func NewBlockChainDataStore() *FFFBlockChainDataStore {
+	return &FFFBlockChainDataStore{
 		PreKey: redis.TbBlockChainKey,
 	}
 }
 
-func (rs *BlockChainDataStore) UseWithCtx(ctx context.Context) *BlockChainDataStore {
+func (rs *FFFBlockChainDataStore) UseWithCtx(ctx context.Context) *FFFBlockChainDataStore {
 	rs.Context = ctx
 	return rs
 }
 
-func (rs *BlockChainDataStore) Set(value redis.BlockChain) error {
-	err := config.GOTECHBOOK_REDIS.HSet(rs.Context, rs.PreKey, value).Err()
+func (rs *FFFBlockChainDataStore) Set(value redis.FFFBlockChain) error {
+	err := config.GOTECHBOOK_REDIS.Set(rs.Context, rs.PreKey, value, 0).Err()
 	if err != nil {
 		logger.Log.Error("BlockChainDataStore Set Error!", zap.Error(err))
 	}
 	return err
 }
 
-func (rs *BlockChainDataStore) GetByKey(id string) (rst redis.BlockChain, err error) {
-	val, err := config.GOTECHBOOK_REDIS.HMGet(rs.Context, rs.PreKey, id).Result()
+func (rs *FFFBlockChainDataStore) Get() (rst redis.FFFBlockChain, err error) {
+	val, err := config.GOTECHBOOK_REDIS.Get(rs.Context, rs.PreKey).Result()
 	if err != nil {
 		logger.Log.Error("BlockChainDataStore GetByKey Error!", zap.Error(err))
 		return rst, err
 	}
-	json.Unmarshal([]byte(val[0].(string)), &rst)
+	json.Unmarshal([]byte(val), &rst)
 	logger.Log.Info("BlockChainDataStore GetKey val!", rst)
 	return rst, err
 }
