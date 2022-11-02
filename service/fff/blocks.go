@@ -88,20 +88,24 @@ func (b *Blocks) insertStore(ctx context.Context, blockChainStore *store.FFFBloc
 				err = mongo.FindOne(ctx, config.GOTECHBOOK_MONGO, mongo.DB_FFF, mongo.TbFFFTransactionsName, bson.M{"transactionHash": tx.Hash().Hex()}, isExit)
 				if err != nil {
 					_, err = mongo.Insert(ctx, config.GOTECHBOOK_MONGO, mongo.DB_FFF, mongo.TbFFFTransactionsName, &mongo.TbFFFTransactions{
-						TransactionHash: tx.Hash().Hex(),
-						BlockHash:       block.Hash().Hex(),
-						BlockNumber:     block.NumberU64(),
-						From:            msg.From().Hex(),
-						To:              tx.To().Hex(),
-						Value:           tx.Value().String(),
-						Gas:             tx.Gas(),
-						GasPrice:        tx.GasPrice().Uint64(),
-						Nonce:           tx.Nonce(),
-						Data:            hexutil.Encode(tx.Data()),
-						Size:            tx.Size().String(),
-						Status:          receipt.Status,
-						Logs:            receipt.Logs,
-						Detail:          receipt,
+						TransactionHash:   tx.Hash().Hex(),
+						BlockHash:         block.Hash().Hex(),
+						BlockNumber:       block.NumberU64(),
+						From:              msg.From().Hex(),
+						To:                tx.To().Hex(),
+						Value:             tx.Value().String(),
+						Gas:               tx.Gas(),
+						GasPrice:          tx.GasPrice().Uint64(),
+						Nonce:             tx.Nonce(),
+						Data:              hexutil.Encode(tx.Data()),
+						Size:              tx.Size().String(),
+						Status:            receipt.Status,
+						Type:              receipt.Type,
+						PostState:         receipt.PostState,
+						CumulativeGasUsed: receipt.CumulativeGasUsed,
+						GasUsed:           receipt.GasUsed,
+						TransactionIndex:  receipt.TransactionIndex,
+						ContractAddress:   receipt.ContractAddress.Hex(),
 					})
 					if err != nil {
 						logger.Log.Error("tb_fff_transactions insert err: ", err)
